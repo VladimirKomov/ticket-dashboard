@@ -12,6 +12,10 @@ async function bootstrap() {
             transform: true,
         }),
     );
+    // allow access from http://localhost:5173
+    app.enableCors({
+        origin: 'http://localhost:5173',
+    });
     await app.listen(3000);
     console.log('Application is running on: http://localhost:3000');
 }
