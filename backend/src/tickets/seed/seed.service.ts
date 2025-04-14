@@ -13,6 +13,7 @@ export class SeedService implements OnApplicationBootstrap {
         private readonly ticketRepo: Repository<Ticket>,
     ) {}
 
+    // Automatically runs when the app boots up
     async onApplicationBootstrap() {
         const count = await this.ticketRepo.count();
         if (count > 0) {
@@ -20,11 +21,12 @@ export class SeedService implements OnApplicationBootstrap {
             return;
         }
 
-        // the file is located in the root
+        // Read the raw JSON file (relative to project root)
         const filePath = path.join(__dirname, '..', '..', '..', '..', 'tickets.json');
         const file = await fs.readFile(filePath, 'utf-8');
         const data = JSON.parse(file);
 
+        // Map and save all tickets to DB
         const tickets = data.dashboardTickets.map(mapRawToTicket);
         await this.ticketRepo.save(tickets);
 

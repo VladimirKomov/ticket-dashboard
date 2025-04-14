@@ -1,3 +1,4 @@
+// Supported ticket status values
 export enum TicketStatus {
     OPEN = 'open',
     PENDING = 'pending',
@@ -6,9 +7,11 @@ export enum TicketStatus {
     CLOSED = 'closed',
 }
 
+// Priority levels used for ticket sorting/filtering
 export enum TicketPriority {
     LOW = 'low',
     MEDIUM = 'medium',
     HIGH = 'high',
+    // default if not provided
     UNKNOWN = 'unknown',
 }

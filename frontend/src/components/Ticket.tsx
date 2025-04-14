@@ -1,13 +1,14 @@
 // src/components/Ticket.tsx
-import { memo } from 'react';
-import { Ticket as TicketType } from '../types/ticket';
+import {memo} from 'react';
+import {Ticket as TicketType} from '../types/ticket';
+import {TICKET_STATUSES} from "../constants/tickets.ts";
 
 interface TicketProps {
     ticket: TicketType;
     onStatusChange: (id: string, status: string) => void;
 }
 
-export const Ticket = memo(function Ticket({ ticket, onStatusChange }: TicketProps) {
+export const Ticket = memo(function Ticket({ticket, onStatusChange}: TicketProps) {
     return (
         <tr>
             <td>{ticket.id}</td>
@@ -20,11 +21,11 @@ export const Ticket = memo(function Ticket({ ticket, onStatusChange }: TicketPro
                     value={ticket.status}
                     onChange={e => onStatusChange(ticket.id, e.target.value)}
                 >
-                    <option value="open">Open</option>
-                    <option value="pending">Pending</option>
-                    <option value="in_progress">In Progress</option>
-                    <option value="resolved">Resolved</option>
-                    <option value="closed">Closed</option>
+                    {Object.entries(TICKET_STATUSES).map(([key, label]) => (
+                        <option key={key} value={key}>
+                            {label}
+                        </option>
+                    ))}
                 </select>
             </td>
         </tr>

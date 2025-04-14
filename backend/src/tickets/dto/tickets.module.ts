@@ -1,7 +1,9 @@
-import { IsEnum } from 'class-validator';
-import { TicketStatus } from '../enums/ticket.enums';
+import {IsEnum} from 'class-validator';
+import {TicketStatus} from '../enums/ticket.enums';
 
+// DTO for validating incoming status updates
 export class UpdateTicketStatusDto {
-@IsEnum(TicketStatus, { message: 'Invalid status value' })
-status!: TicketStatus;
+    // Must be a valid value from the TicketStatus enum
+    @IsEnum(TicketStatus, {message: 'Invalid status value'})
+    status!: TicketStatus;
 }

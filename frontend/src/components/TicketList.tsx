@@ -4,6 +4,7 @@ import { Ticket as TicketType } from '../types/ticket';
 import { TicketStatusFilter } from './TicketStatusFilter';
 import { TicketTable } from './TicketTable';
 
+// Main UI component to display and interact with ticket list
 export function TicketList() {
     const [tickets, setTickets] = useState<TicketType[]>([]);
     const [filter, setFilter] = useState<string>('');
@@ -11,6 +12,7 @@ export function TicketList() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
+    // Fetch tickets on mount or when filter changes
     useEffect(() => {
         const fetchTickets = async () => {
             try {
@@ -29,6 +31,7 @@ export function TicketList() {
         fetchTickets();
     }, [filter]);
 
+    // Update ticket status
     const updateStatus = useCallback(async (id: string, status: string) => {
         try {
             await api.patch(`/tickets/${id}`, { status });
@@ -42,6 +45,7 @@ export function TicketList() {
         }
     }, []);
 
+    // Sort tickets
     const sortedTickets = [...tickets].sort((a, b) => {
         if (sortBy === 'created') {
             return new Date(b.created).getTime() - new Date(a.created).getTime();
@@ -51,10 +55,12 @@ export function TicketList() {
 
     return (
         <div>
-            <h2>🎫 Tickets</h2>
+            <h2>Tickets</h2>
 
+            {/* Status filter */}
             <TicketStatusFilter value={filter} onChange={setFilter} />
 
+            {/* Sorting */}
             <label style={{ marginLeft: '1rem' }}>
                 Sort by:{' '}
                 <select
@@ -66,6 +72,7 @@ export function TicketList() {
                 </select>
             </label>
 
+            {/* Loader and error handling */}
             {loading && <p>Loading tickets...</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
 

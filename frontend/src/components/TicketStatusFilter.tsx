@@ -1,4 +1,4 @@
-import {TICKET_STATUSES} from "../../constants/tickets.ts";
+import {TICKET_STATUSES} from "../constants/tickets.ts";
 
 
 interface Props {

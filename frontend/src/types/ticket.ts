@@ -1,3 +1,4 @@
+// Ticket shape used across the frontend
 export interface Ticket {
     id: string;
     title: string;

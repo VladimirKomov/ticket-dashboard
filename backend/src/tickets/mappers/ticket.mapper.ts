@@ -1,6 +1,7 @@
-import { Ticket } from '../entities/ticket.entity';
-import { TicketPriority, TicketStatus } from '../enums/ticket.enums';
+import {Ticket} from '../entities/ticket.entity';
+import {TicketPriority, TicketStatus} from '../enums/ticket.enums';
 
+// Converts a raw object (e.g. from JSON) into a valid Ticket entity
 export function mapRawToTicket(raw: any): Ticket {
     const ticket = new Ticket();
 
@@ -13,6 +14,7 @@ export function mapRawToTicket(raw: any): Ticket {
     return ticket;
 }
 
+// Cleans and maps raw status values to TicketStatus enum
 function normalizeStatus(value: string): TicketStatus {
     const cleaned = value?.toLowerCase().replace(/\s+/g, '');
     switch (cleaned) {
@@ -31,6 +33,7 @@ function normalizeStatus(value: string): TicketStatus {
     }
 }
 
+// Maps raw priority values to TicketPriority enum
 function normalizePriority(value: string): TicketPriority {
     switch ((value || '').toLowerCase()) {
         case 'low':
@@ -44,6 +47,7 @@ function normalizePriority(value: string): TicketPriority {
     }
 }
 
+// Parses date string into Date object, throws if invalid
 function normalizeDate(value: string): Date {
     const parsed = new Date(value);
     if (!isNaN(parsed.getTime())) return parsed;

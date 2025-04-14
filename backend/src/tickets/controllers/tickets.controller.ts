@@ -1,4 +1,4 @@
-import {Body, Controller, Get, NotFoundException, Param, Patch, Query, Logger} from '@nestjs/common';
+import {Body, Controller, Get, Logger, NotFoundException, Param, Patch, Query} from '@nestjs/common';
 import {TicketsService} from '../services/tickets.service';
 import {Ticket} from '../entities/ticket.entity';
 import {UpdateTicketStatusDto} from "../dto/tickets.module";
@@ -6,15 +6,20 @@ import {UpdateTicketStatusDto} from "../dto/tickets.module";
 @Controller('tickets')
 export class TicketsController {
     private readonly logger = new Logger(TicketsController.name);
+
     constructor(private readonly ticketsService: TicketsService) {
     }
 
+    // GET /tickets?status=...
+    // Fetch all tickets, optionally filtered by status
     @Get()
     async getAll(@Query('status') status?: string): Promise<Ticket[]> {
         this.logger.log(`Getting tickets${status ? ` with status = ${status}` : ''}`);
         return this.ticketsService.findAll(status);
     }
 
+    // PATCH /tickets/:id
+    // Update the status of a specific ticket
     @Patch(':id')
     async updateStatus(
         @Param('id') id: string,
